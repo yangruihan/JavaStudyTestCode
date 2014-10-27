@@ -1,0 +1,118 @@
+1.Java 语言的反射机制
+在运行时判断任意一个对象所属的类
+在运行时构造任意一个类的对象
+在运行时判断任意一个类所具有的成员变量和方法
+在运行时调用任意一个对象的方法
+
+2.Java中，无论生成某个类的多少个对象，这些对象都会对应同一个Class对象。
+
+3.获得一个类对应的Class类的方法：
+a)通过Class.forName("类全称"); 来获得
+b)Class<?> classType = className.class;
+c)通过Object.getClass()方法获得
+
+4.要想使用反射，首先需要获得待处理类或对象所对应的Class对象。
+
+5.若想通过类的不带参数的构造方法来生成对象，我们有两种方式：
+a)先获得Class对象，然后通过该Class对象的newInstance()方法直接生成即可：
+Class<?> classType = String.class; Object obj = classType.newInstance();
+b)先获得Class对象，然后通过该对象获得对应的Constructor对象，再通过该Constructor对象的newInstance()方法生成：
+	Class<?> classType = Customer.class;
+	Constructor cons = classType.getConstructor(new class[]{});
+	Object obj = cons.newInstance(new Object[]{});
+
+6.若想通过类的带参数的构造方法来生成对象，只能使用下面这种方法：
+	Class<?> classType = Customer.class;
+	Constructor cons = classType.getConstructor(new class[]{String.class,int.class});
+	Object obj = cons.newInstance(new Object[]{"hello",3});
+	
+7.Integer.TYPE 返回的是int
+   Integer.class 返回的是java.lang.Integer
+
+8.代理模式的作用是：为其他对象提供一种代理以控制对这个对象的访问。（在某些情况下，一个客户不想或者不能直接引用另一个对象，而代理对象可以在客户端和目标对象之间起到中介的作用）
+
+9.代理模式一般涉及到的角色有：
+	抽象角色：声明真实对象和代理对象的共同接口
+	代理角色：代理对象角色内部含有对真实对象的引用，从而可以操作真实对象，同时代理对象提供与真实对象相同的接口以便在任何时刻都能代替真实对象。同时，代理对象可以在执行真实对象操作时，附加其他操作，相当于对真实对象进行封装。
+	真实角色：代理角色所代表的真实对象，是我们最终要引用的对象。
+
+
+14/10/17
+---------------------------------------------------------------------------------------------------------
+
+10.动态代理步骤：
+	a)创建一个实现接口InvocationHandler的类，它必须实现invoke方法
+	b)创建被代理的类以及接口
+	c)通过Proxy的静态方法
+	newProxyInstance(ClassLoader loader, Class[] interfaces, InvocationHandler h)
+	创建一个代理
+	d)通过代理调用方法
+
+11.静态代理模式图：
+	Subject
+	↗     ↖
+            Real ← Proxy
+
+12.Java注解（Annotation）：
+	annotation并不直接影响代码语义，但是它能够工作的方式被看作类似程序的工具或者类库，它会反过来对正在运行的程序语义有所影响，annotation可以从源文件、class文件或者以在运行时反射的多种方式被读取。
+	a）Override注解表示子类要重写（override）父类的对应方法。
+	b）Deprecated注解表示方法是不建议被使用的。
+	c）SuppressWarnings("unchecked")注解表示抑制警告。
+	
+13.自定义注解：当注解中的属性名为value时，在对其赋值时，可以不指定属性名称而直接写上属性值即可；除了value以外的其他值都需要使用name=value这种赋值方式，即明确指定给谁赋值。
+
+14/10/24
+---------------------------------------------------------------------------------------------------------
+
+14.注解中可以给属性添加默认值，格式如：
+public @interface AnnotationTest {
+	String value1() default "hello";
+}
+
+15.当我们使用@interface 关键字定义一个注解时，该注解隐含地继承了java.lang.annotation.Annotation 接口；如果我们定义了一个接口并且继承了Annotation这个接口，那么我们所定义的接口依然还是接口而不是注解；Annotation本身是接口而不是注解。可以与Enum类比。
+
+16.注解是可以修饰注解的。例：
+@Target(value={TYPE,FIELD,METHOD,PARAMETER,CONSTRUCTOR,LOCAL_VARIABLE})
+ @Retention(value=SOURCE)
+public @interface SuppressWarnings
+
+17.一个方法或注解可以被多个注解所修饰。
+
+18.@SuppressWarnings()用例：
+	@SuppressWarnings("unchecked")
+		告诉编译器忽略 unchecked 警告信息，如使用List，ArrayList等未进行	参数化产生的警告信息。
+	@SuppressWarnings("serial")
+		如果编译器出现这样的警告信息：The serializable class 	WmailCalendar does not declare a static final serialVersionUID field of type 	long。
+       	使用这个注释将警告信息去掉。
+	@SuppressWarnings("deprecation")
+		如果使用了使用@Deprecated注释的方法，编译器将出现警告信息。 	使用这个注释将警告信息去掉。
+	@SuppressWarnings("unchecked", "deprecation")
+		告诉编译器同时忽略unchecked和deprecation的警告信息。
+	@SuppressWarnings(value={"unchecked", "deprecation"})
+		等同于@SuppressWarnings("unchecked", "deprecation")
+
+19.JUnit（3.8版本、4.x版本）：Keep the bar green to keep the code clean.
+
+20.JUnit4的执行的一般流程：
+	a）首先获得待测试类所对应的Class对象。
+	b）然后通过该Class对象获得当前类中所有public方法所对应的Method数组。
+	c）遍历该Method数组，取得每一个Method对象
+	d）调用每个Method对象的isAnnotationPresent(Test.class)方法，判断该方法是		否被Test注解所修饰。
+	e）如果该方法返回true，那么调用method.invoke()方法去执行该方法，否则不执		行。
+
+21.单元测试不是为了证明你是对的，而是证明你没有错误。
+
+22.Writing Secure Code（编写安全的代码）：Input is evil.
+
+23.异常（Exception）：所有的异常类都会直接或间接地继承自Exception这个父类。
+
+24.Java中的异常分为两大类：
+	a）Checked exception（非Runtime Exception）
+	b）Unchecked exception（Runtime Exception）
+
+25.RuntimeException类也是直接继承自Exception类，它叫做运行时异常，Java中所有的运行时异常都会直接或间接地继承自RuntimeException。
+
+26.Java中凡是继承自Exception而不是继承自RuntimeException的类都是非运行时异常。
+
+
+
