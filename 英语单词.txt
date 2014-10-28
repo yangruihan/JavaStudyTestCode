@@ -14,3 +14,6 @@ terminate
 	vi. 结束，终止；结果
 	adj. 结束的
 	
+archive
+	n. 档案馆；档案文件
+	vt. 把…存档

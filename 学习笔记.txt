@@ -142,6 +142,10 @@ public @interface SuppressWarnings
 
 36.如果try块中存在System.exit(0)语句，那么就不会执行finally块中的代码，因为System.exit(0)会终止当前运行的Java虚拟机，程序会在虚拟机终止前结束执行
 
-37.
+37.GUI（Graphical User Interface）图形用户界面
 
+38.AWT（Abstact Window Toolkit）抽象窗口工具集，第一代的Java GUI 组件，是重量级的组件
 
+39.Swing，不依赖于底层细节，是轻量级的组件
+
+40.
