@@ -136,8 +136,12 @@ public @interface SuppressWarnings
 
 33.所谓自定义异常， 通常 就是定义了一个继承自Exception类的子类，那么这个类就是一个自定义异常类。通常情况下，我们都会直接继承自Exception类，一般不会继承某个运行时的异常类。
 
-34.
+34.我们可以使用多个catch块来捕获异常，这时需要将父类型的catch块放到子类型的catch块之后，这样才能保证后续的catch可能被执行，否则子类型的catch将永远无法到达，Java编译器会报编译错误；如果多个catch块的异常类型是独立的（MyException，MyException2），那么谁前谁后都可以
 
+35.如果try块中存在return语句，那么首先也需要将finally快中的代码执行完毕，然后方法再返回
 
+36.如果try块中存在System.exit(0)语句，那么就不会执行finally块中的代码，因为System.exit(0)会终止当前运行的Java虚拟机，程序会在虚拟机终止前结束执行
+
+37.
 
 

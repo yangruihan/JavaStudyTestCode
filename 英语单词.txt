@@ -8,3 +8,9 @@ inherited
 
 subtract
 	vt. 减去；扣掉
+
+terminate
+	vt. 使终止；使结束；解雇
+	vi. 结束，终止；结果
+	adj. 结束的
+	
