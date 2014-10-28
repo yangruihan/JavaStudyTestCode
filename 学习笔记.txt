@@ -114,5 +114,28 @@ public @interface SuppressWarnings
 
 26.Java中凡是继承自Exception而不是继承自RuntimeException的类都是非运行时异常。
 
+27.异常处理的一般结构是：
+	try {
+
+	} catch (Exception e) {
+
+	} 
+	finally {
+
+	}
+
+28.无论是否发生异常，finally里面的内容都要执行
+
+29.try后面无论跟了多少个catch，都只可能有一个catch被执行，不可能有多个catch都执行
+
+30.对于非运行时异常（Checked Exception）,必须要对其进行处理，处理方式有两种：第一种是用try...catch...finally进行捕获；第二种是在调用该会产生异常的方法所在的地方声明throws Exception
+
+31.对于运行时异常（Runtime Exception），我们可以不对其进行处理，也可以对其进行处理，推荐不对其进行处理
+
+32.NullPointerException是空指针异常，出现该异常的原因在于某个引用为null，但你却调用了它的某个方法。这时就会出现该异常
+
+33.
+
+
 
 
